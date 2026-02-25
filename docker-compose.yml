@@ -13,7 +13,7 @@ services:
       - ./backend:/app/backend
       - faiss_data:/data
     environment:
-      - GEMINI_API_KEY=${AIzaSyAc0OSUAo74zndQvzyJOW-xf-pwHdo54XU}
+      - GEMINI_API_KEY=${Your_API_Key}
       - FAISS_INDEX_PATH=/data/faiss_index
     restart: unless-stopped
 
