@@ -1,0 +1,37 @@
+version: '3.8'
+
+services:
+  backend:
+    build:
+      context: .
+      dockerfile: Dockerfile
+      target: backend
+    container_name: enterprise_ai_backend
+    ports:
+      - "8000:8000"
+    volumes:
+      - ./backend:/app/backend
+      - faiss_data:/data
+    environment:
+      - GEMINI_API_KEY=${AIzaSyAc0OSUAo74zndQvzyJOW-xf-pwHdo54XU}
+      - FAISS_INDEX_PATH=/data/faiss_index
+    restart: unless-stopped
+
+  frontend:
+    build:
+      context: .
+      dockerfile: Dockerfile
+      target: frontend
+    container_name: enterprise_ai_frontend
+    ports:
+      - "8501:8501"
+    volumes:
+      - ./frontend:/app/frontend
+    environment:
+      - API_URL=http://backend:8000
+    depends_on:
+      - backend
+    restart: unless-stopped
+
+volumes:
+  faiss_data:
